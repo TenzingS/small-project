@@ -23,8 +23,8 @@ public class MovieController {
         Javalin app = Javalin.create();
         app.get("/movies", this::getAllMoviesHandler);
         app.post("/movies", this::postMoviesHandler);
-        app.get("/movies/<rating>", this::getMoviesByRatingHandler);
-        app.get("/movies/<genre>", this::getMoviesByGenresHandler);
+        app.get("/movies/rating/<rating>", this::getMoviesByRatingHandler);
+        app.get("/movies/genre/<genre>", this::getMoviesByGenresHandler);
         return app;
     }
 
