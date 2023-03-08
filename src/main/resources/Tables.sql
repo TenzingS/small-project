@@ -5,7 +5,7 @@
 drop table if exists movie;
 
 create table movie(
-    movie_id int primary_key auto_increment,
+    movie_id int primary key auto_increment,
     movie_name varchar(255),
     genre varchar(255),
     rating int

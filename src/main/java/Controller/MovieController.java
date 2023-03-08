@@ -19,13 +19,13 @@ public class MovieController {
         this.movieService = new MovieService();
     }
 
-    public void startAPI(){
+    public Javalin startAPI(){
         Javalin app = Javalin.create();
         app.get("/movies", this::getAllMoviesHandler);
         app.post("/movies", this::postMoviesHandler);
-        app.get("/movies/{rating}", this::getMoviesByRatingHandler);
-        app.get("/movies/{genre}", this::getMoviesByGenresHandler);
-        app.start(8080);
+        app.get("/movies/<rating>", this::getMoviesByRatingHandler);
+        app.get("/movies/<genre>", this::getMoviesByGenresHandler);
+        return app;
     }
 
     private void getAllMoviesHandler(Context ctx) {
