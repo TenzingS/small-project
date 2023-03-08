@@ -3,7 +3,6 @@
 --then create your tables
 
 drop table if exists movie;
-drop table if exists rating;
 
 create table movie(
     movie_id int primary_key auto_increment,

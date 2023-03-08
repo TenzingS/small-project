@@ -36,7 +36,7 @@ public class MovieController {
     private void postMoviesHandler(Context ctx) throws JsonProcessingException {
         ObjectMapper om = new ObjectMapper();
         Movie movie = om.readValue(ctx.body(), Movie.class);
-        Movie createdMovie = movieService.createMovie(movie.getMovie_name(), movie.getGenre(), movie.getRating());
+        Movie createdMovie = movieService.createMovie(movie);
         if(createdMovie != null){
             ctx.json(om.writeValueAsString(createdMovie));
         }else{

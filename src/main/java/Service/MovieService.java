@@ -14,7 +14,9 @@ public class MovieService {
         this.movieDAO = movieDAO;
     }
 
-    public Movie createMovie(String movie_name, String genre, int rating) {
+    public Movie createMovie(Movie movie) {
+        String movie_name = movie.getMovie_name();
+        int rating = movie.getRating();
 
         if((movie_name.length() > 0 && movie_name.length() < 255) && (rating > 0 && rating <=5)){
             return movieDAO.insertMovie(movie);
