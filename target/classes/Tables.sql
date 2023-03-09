@@ -2,6 +2,7 @@
 --first, drop your tables (to reset your database for testing)
 --then create your tables
 
+drop table if exists account;
 drop table if exists movie;
 
 create table account (

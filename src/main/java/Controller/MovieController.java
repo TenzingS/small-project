@@ -29,8 +29,8 @@ public class MovieController {
         app.post("login", this::userLoginHandler);
         app.get("/movies", this::getAllMoviesHandler);
         app.post("/movies", this::postMoviesHandler);
-        app.get("/movies/rating/<rating>", this::getMoviesByRatingHandler);
-        app.get("/movies/genre/<genre>", this::getMoviesByGenresHandler);
+        app.get("/movies/rating/{rating}", this::getMoviesByRatingHandler);
+        app.get("/movies/genre/{genre}", this::getMoviesByGenresHandler);
         app.delete("movies/{movie_id}", this::deleteMovieByIDHandler);
         return app;
     }

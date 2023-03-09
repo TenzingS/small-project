@@ -14,3 +14,39 @@ create table movie(
     genre varchar(255),
     rating int
 ) [42001-214]
+2023-03-09 16:03:26 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "ACCOUNT" already exists; SQL statement:
+
+
+create table account (
+    account_id int primary key auto_increment,
+    username varchar(255) unique,
+    password varchar(255 [42101-214]
+2023-03-09 16:03:47 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "MOVIE" not found; SQL statement:
+SELECT * FROM movie [42102-214]
+2023-03-09 16:04:04 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "MOVIE" not found; SQL statement:
+INSERT INTO movie (movie_name, genre, rating, posted_by) VALUES (?,?,?,?) [42102-214]
+2023-03-09 16:04:09 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "MOVIE" not found; SQL statement:
+INSERT INTO movie (movie_name, genre, rating, posted_by) VALUES (?,?,?,?) [42102-214]
+2023-03-09 16:05:02 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "MOVIE" not found; SQL statement:
+INSERT INTO movie (movie_name, genre, rating, posted_by) VALUES (?,?,?,?) [42102-214]
+2023-03-09 16:12:17 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Cannot drop "ACCOUNT" because "CONSTRAINT_46" depends on it; SQL statement:
+--h2 is typically used to se [90107-214]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:632)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:477)
+	at org.h2.message.DbException.get(DbException.java:223)
+	at org.h2.command.ddl.DropTable.prepareDrop(DropTable.java:97)
+	at org.h2.command.ddl.DropTable.update(DropTable.java:121)
+	at org.h2.command.CommandContainer.update(CommandContainer.java:169)
+	at org.h2.command.Command.executeUpdate(Command.java:252)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:252)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:223)
+	at org.h2.tools.RunScript.execute(RunScript.java:169)
+	at Util.ConnectionSingleton.resetTestDatabase(ConnectionSingleton.java:64)
+	at Util.ConnectionSingleton.getConnection(ConnectionSingleton.java:44)
+	at Application.main(Application.java:9)
