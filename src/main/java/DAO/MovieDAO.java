@@ -18,7 +18,7 @@ public class MovieDAO {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             ResultSet rs = preparedStatement.executeQuery();
             while(rs.next()){
-                Movie movie = new Movie(rs.getInt("movie_id"), rs.getString("movie_name"), rs.getString("genre"), rs.getInt("rating"));
+                Movie movie = new Movie(rs.getInt("movie_id"), rs.getString("movie_name"), rs.getString("genre"), rs.getInt("rating"), rs.getInt("posted_by"));
                 allMovies.add(movie);
             }
         }catch(SQLException e){
@@ -30,12 +30,13 @@ public class MovieDAO {
     public Movie insertMovie(Movie movie){
         Connection connection = ConnectionSingleton.getConnection();
         try{
-            String sql = "INSERT INTO movie (movie_name, genre, rating) VALUES (?,?,?)";
+            String sql = "INSERT INTO movie (movie_name, genre, rating, posted_by) VALUES (?,?,?,?)";
             PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
             preparedStatement.setString(1, movie.getMovie_name());
             preparedStatement.setString(2, movie.getGenre());
             preparedStatement.setLong(3, movie.getRating());
+            preparedStatement.setInt(4, movie.getPosted_by());
 
             preparedStatement.executeUpdate();
             ResultSet rs = preparedStatement.getGeneratedKeys();
@@ -45,7 +46,8 @@ public class MovieDAO {
                         generated_movie_id,
                         movie.getMovie_name(),
                         movie.getGenre(),
-                        movie.getRating());
+                        movie.getRating(),
+                        movie.getPosted_by());
             }
         }catch(SQLException e){
             System.out.println(e.getMessage());
@@ -67,7 +69,7 @@ public class MovieDAO {
             ResultSet rs = preparedStatement.executeQuery();
 
             while(rs.next()){
-                Movie movie = new Movie(rs.getInt("movie_id"), rs.getString("movie_name"), rs.getString("genre"), rs.getInt("rating"));
+                Movie movie = new Movie(rs.getInt("movie_id"), rs.getString("movie_name"), rs.getString("genre"), rs.getInt("rating"), rs.getInt("posted_by"));
                 moviesByRating.add(movie);
             }
 
@@ -92,7 +94,7 @@ public class MovieDAO {
             ResultSet rs = preparedStatement.executeQuery();
 
             while(rs.next()){
-                Movie movie = new Movie(rs.getInt("movie_id"), rs.getString("movie_name"), rs.getString("genre"), rs.getInt("rating"));
+                Movie movie = new Movie(rs.getInt("movie_id"), rs.getString("movie_name"), rs.getString("genre"), rs.getInt("rating"), rs.getInt("posted_by"));
                 moviesByGenre.add(movie);
             }
 
@@ -101,5 +103,42 @@ public class MovieDAO {
         }
 
         return moviesByGenre;
+    }
+
+    public Movie getMovieByID(int movie_id){
+        Connection connection = ConnectionSingleton.getConnection();
+        try {
+            //Write SQL logic here
+            String sql = "SELECT * FROM movie WHERE movie_id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+            preparedStatement.setInt(1, movie_id);
+
+            ResultSet rs = preparedStatement.executeQuery();
+            while(rs.next()){
+                return new Movie(
+                        rs.getInt("movie_id"), rs.getString("movie_name"), rs.getString("genre"), rs.getInt("rating"), rs.getInt("posted_by"));
+            }
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+
+    public Movie deleteMovieByID(int movie_id){
+        Connection connection = ConnectionSingleton.getConnection();
+        try {
+            //Write SQL logic here
+            String sql = "DELETE FROM movie WHERE movie_id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+            preparedStatement.setInt(1, movie_id);
+
+            preparedStatement.executeUpdate();
+            return getMovieByID(movie_id);
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return null;
     }
 }

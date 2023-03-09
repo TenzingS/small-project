@@ -24,6 +24,9 @@ public class MovieService {
         return null;
     }
 
+    public Movie getMovieByID(int movie_id) {
+        return movieDAO.getMovieByID(movie_id);
+    }
 
     public List<Movie> getAllMovies() {
         return movieDAO.getAllMovies();
@@ -35,5 +38,13 @@ public class MovieService {
 
     public List<Movie> getMovieByRating(int rating) {
         return movieDAO.getMovieByRating(rating);
+    }
+
+    public Movie deleteMovieByID(int movie_id) {
+        Movie movieFromDB = this.movieDAO.getMovieByID(movie_id);
+        movieDAO.deleteMovieByID(movie_id);
+        if(movieFromDB == null){
+            return null;
+        }return movieFromDB;
     }
 }
